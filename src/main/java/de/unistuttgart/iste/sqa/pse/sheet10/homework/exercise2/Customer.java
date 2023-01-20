@@ -4,15 +4,14 @@ package de.unistuttgart.iste.sqa.pse.sheet10.homework.exercise2;
  * Represents a customer who can order items.
  */
 public final class Customer {
-	// @ private instance invariant name != null && name.length() > 0;
 
+	// @ private instance invariant name != null && name.length() > 0;
 	private final String name;
 
 	/*@
 	@ requires name != null && name.length() > 0;
 	@ ensures this.name == name;
 	@*/
-
 	/**
 	 * Creates a new customer with the given name.
 	 *
@@ -29,7 +28,6 @@ public final class Customer {
 	/*@
 	@ ensures \result == name;
 	@*/
-
 	/**
 	 * @return This customer's name.
 	 */

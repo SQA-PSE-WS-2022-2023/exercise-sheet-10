@@ -17,11 +17,26 @@ public final class Company {
 	public Company() {
 		orderBuffer = new Buffer();
 		// TODO: Exercises 2e and 2i
-		penWarehouse = triangleRulerWarehouse = compassWarehouse = null;
+		penWarehouse = new Warehouse(30);
+		triangleRulerWarehouse = new Warehouse(20);
+		compassWarehouse = new Warehouse(10);
 	}
 
 	public void handleIncomingItem(final Item item) {
 		// TODO: Exercise 2e
+		switch (item.getIdentification().getType()) {
+		case PEN:
+			penWarehouse.addItem(item);
+			break;
+		case TRIANGLE_RULER:
+			triangleRulerWarehouse.addItem(item);
+			break;
+		case COMPASS:
+			compassWarehouse.addItem(item);
+			break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + item.getIdentification().getType());
+		}
 	}
 
 	public void processIncomingOrder(final ItemIdentification identification, final Customer customer) {

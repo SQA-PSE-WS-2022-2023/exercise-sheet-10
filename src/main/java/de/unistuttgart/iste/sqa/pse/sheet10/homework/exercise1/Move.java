@@ -34,12 +34,13 @@ public class Move {
 		this.displacedPiece = displacedPiece;
 	}
 
+	/*@
+	  @ ensures movedPiece.position == newLocation
+	  @ ensures displacedPiece != null => displacedPiece.position == new Location(Zone.START,0)
+	  @*/
 	/**
 	 * Executes the move by updating positions of participating pieces
 	 * and prints move to the console
-	 *
-	 * @ensures movedPiece.position == newLocation
-	 * @ensures displacedPiece != null => displacedPiece.position == new Location(Zone.START,0)
 	 */
 	public void executeMove() {
 		System.out.println("Old Position: " + this.movedPiece.getPosition() + " -> New Position: " + newLocation);

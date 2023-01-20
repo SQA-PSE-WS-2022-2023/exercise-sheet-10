@@ -4,8 +4,8 @@ package de.unistuttgart.iste.sqa.pse.sheet10.homework.exercise2;
  * Identification object for an individual item.
  */
 public final class ItemIdentification {
-	// @ private instance invariant type != null;
 
+	// @ private instance invariant type != null;
 	private final ItemType type;
 	private final int itemNumber;
 
@@ -14,7 +14,6 @@ public final class ItemIdentification {
 	@ ensures this.type == type;
 	@ ensures this.itemNumber == itemNumber;
 	@*/
-
 	/**
 	 * Creates an item identification object with the given information.
 	 *
@@ -33,7 +32,6 @@ public final class ItemIdentification {
 	/*@
 	@ ensures \result == type;
 	@*/
-
 	/**
 	 * @return The item type of the identified item.
 	 */
@@ -44,7 +42,6 @@ public final class ItemIdentification {
 	/*@
 	@ ensures \result == itemNumber;
 	@*/
-
 	/**
 	 * @return The unique number of the identified item.
 	 */

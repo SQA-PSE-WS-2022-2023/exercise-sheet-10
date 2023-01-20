@@ -34,11 +34,6 @@ public class Piece {
 		return position;
 	}
 
-	/**
-	 * Setter for position
-	 *
-	 * @param position new Location
-	 */
 	public void setPosition(Location position) {
 		this.position = position;
 	}
@@ -51,7 +46,7 @@ public class Piece {
 	 */
 	public Boolean checkForCollision(Location otherLocation) {
 		if (this.position.getZone() == otherLocation.getZone()) {
-			if (this.position.getCoordinate() == otherLocation.getCoordinate()) {
+			if (this.position.getCoordinate( ) == otherLocation.getCoordinate()) {
 				return true;
 			}
 		}
@@ -65,13 +60,16 @@ public class Piece {
 	 * @param roll Diceroll (1-6)
 	 * @returns new legal Location if there is one this.position otherwise
 	 */
-	public Location generateNewLocationGivenRoll(int roll) {
+	public Location newRolledLocation(int roll) {
+		
+		int Coordinate = this.position.getCoordinate();
+		
 		/*
 		 * Goal: can move up 1 to 3 steps depending on position
 		 */
 		if (this.position.getZone() == Zone.GOAL) {
-			if (roll <= 3 - this.position.getCoordinate()) {
-				return new Location(Zone.GOAL, this.position.getCoordinate() + roll);
+			if (roll <= 3 - this.position.getCoordinate( )) {
+				return new Location(Zone.GOAL, this.position.getCoordinate( ) + roll);
 			}
 		}
 		/*
@@ -79,15 +77,7 @@ public class Piece {
 		 */
 		if (this.position.getZone() == Zone.START) {
 			if (roll == 6) {
-				if (this.id <= 4) {
-					return new Location(Zone.FIELD, 0);
-				} else if (this.id <= 8) {
-					return new Location(Zone.FIELD, 10);
-				} else if (this.id <= 12) {
-					return new Location(Zone.FIELD, 20);
-				} else if (this.id <= 16) {
-					return new Location(Zone.FIELD, 30);
-				}
+				return getStartPosition();
 			}
 		}
 		/*
@@ -95,43 +85,56 @@ public class Piece {
 		 */
 		if (this.position.getZone() == Zone.FIELD) {
 			if (this.id <= 4) {
-				if (this.position.getCoordinate() + roll <= 39) {
-					return new Location(Zone.FIELD, this.position.getCoordinate() + roll);
-				} else if (this.position.getCoordinate() + roll <= 43) {
-					return new Location(Zone.GOAL, this.position.getCoordinate() + roll - 40);
+				if (Coordinate + roll <= 39) {
+					return new Location(Zone.FIELD, Coordinate + roll);
+				} else if (Coordinate + roll <= 43) {
+					return new Location(Zone.GOAL, Coordinate + roll - 40);
 				}
 			} else if (this.id <= 8) {
-				if (this.position.getCoordinate() >= 10 && this.position.getCoordinate() + roll <= 39) {
-					return new Location(Zone.FIELD, this.position.getCoordinate() + roll);
-				} else if (this.position.getCoordinate() >= 10 && this.position.getCoordinate() + roll > 39) {
-					return new Location(Zone.FIELD, (this.position.getCoordinate() + roll) % 40);
-				} else if (this.position.getCoordinate() < 10 && this.position.getCoordinate() + roll < 10) {
-					return new Location(Zone.FIELD, this.position.getCoordinate() + roll);
-				} else if (this.position.getCoordinate() < 10 && this.position.getCoordinate() + roll <= 13) {
-					return new Location(Zone.GOAL, this.position.getCoordinate() + roll - 10);
+				if (Coordinate >= 10 && Coordinate + roll <= 39) {
+					return new Location(Zone.FIELD, Coordinate + roll);
+				} else if (Coordinate >= 10 && Coordinate + roll > 39) {
+					return new Location(Zone.FIELD, (Coordinate + roll) % 40);
+				} else if (Coordinate < 10 && Coordinate + roll < 10) {
+					return new Location(Zone.FIELD, Coordinate + roll);
+				} else if (Coordinate < 10 && Coordinate + roll <= 13) {
+					return new Location(Zone.GOAL, Coordinate + roll - 10);
 				}
 			} else if (this.id <= 12) {
-				if (this.position.getCoordinate() >= 20 && this.position.getCoordinate() + roll <= 39) {
-					return new Location(Zone.FIELD, this.position.getCoordinate() + roll);
-				} else if (this.position.getCoordinate() >= 20 && this.position.getCoordinate() + roll > 39) {
-					return new Location(Zone.FIELD, (this.position.getCoordinate() + roll) % 40);
-				} else if (this.position.getCoordinate() < 20 && this.position.getCoordinate() + roll < 20) {
-					return new Location(Zone.FIELD, this.position.getCoordinate() + roll);
-				} else if (this.position.getCoordinate() < 20 && this.position.getCoordinate() + roll <= 23) {
-					return new Location(Zone.GOAL, this.position.getCoordinate() + roll - 20);
+				if (Coordinate >= 20 && Coordinate + roll <= 39) {
+					return new Location(Zone.FIELD, Coordinate + roll);
+				} else if (Coordinate >= 20 && Coordinate + roll > 39) {
+					return new Location(Zone.FIELD, (Coordinate + roll) % 40);
+				} else if (Coordinate < 20 && Coordinate + roll < 20) {
+					return new Location(Zone.FIELD, Coordinate + roll);
+				} else if (Coordinate < 20 && Coordinate + roll <= 23) {
+					return new Location(Zone.GOAL, Coordinate + roll - 20);
 				}
 			} else if (this.id <= 16) {
-				if (this.position.getCoordinate() >= 30 && this.position.getCoordinate() + roll <= 39) {
-					return new Location(Zone.FIELD, this.position.getCoordinate() + roll);
-				} else if (this.position.getCoordinate() >= 30 && this.position.getCoordinate() + roll > 39) {
-					return new Location(Zone.FIELD, (this.position.getCoordinate() + roll) % 40);
-				} else if (this.position.getCoordinate() < 30 && this.position.getCoordinate() + roll < 30) {
-					return new Location(Zone.FIELD, this.position.getCoordinate() + roll);
-				} else if (this.position.getCoordinate() < 30 && this.position.getCoordinate() + roll <= 33) {
-					return new Location(Zone.GOAL, this.position.getCoordinate() + roll - 30);
+				if (Coordinate >= 30 && Coordinate + roll <= 39) {
+					return new Location(Zone.FIELD, Coordinate + roll);
+				} else if (Coordinate >= 30 && Coordinate + roll > 39) {
+					return new Location(Zone.FIELD, (Coordinate + roll) % 40);
+				} else if (Coordinate < 30 && Coordinate + roll < 30) {
+					return new Location(Zone.FIELD, Coordinate + roll);
+				} else if (Coordinate < 30 && Coordinate + roll <= 33) {
+					return new Location(Zone.GOAL, Coordinate + roll - 30);
 				}
 			}
 		}
 		return this.position;
+	}
+	
+	/**
+	 * returns the start position for its specific id.
+	 */
+	private Location getStartPosition() {
+			if (this.id <= 4)
+				return new Location(Zone.FIELD, 0);
+			else if (this.id <= 8)
+				return new Location(Zone.FIELD, 10);
+			else if (this.id <= 12)
+				return new Location(Zone.FIELD, 20);
+			return new Location(Zone.FIELD, 30);
 	}
 }

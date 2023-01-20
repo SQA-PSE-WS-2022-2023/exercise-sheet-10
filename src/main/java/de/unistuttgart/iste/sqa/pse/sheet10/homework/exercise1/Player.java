@@ -5,15 +5,13 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This is the implementation of a Player in Mensch�rgereDichNicht
- *
- * @author Sven Naber
- * @version 1.0
+ * This is the implementation of a Player in MenschaergereDichNicht
  */
 public class Player {
-	List<Piece> pieces = new LinkedList<Piece>();
-	Colour playerColour;
-	Game field;
+
+	protected List<Piece> pieces = new LinkedList<Piece>();
+	protected Colour playerColour;
+	protected Game field;
 
 	/**
 	 * Class constructor
@@ -23,7 +21,7 @@ public class Player {
 	 * @param field        the Game the player participates in
 	 * @param playerColour the colour of the player (1-4 RED; 5-8 BLUE; 9-12 YELLOW; 13-16 GREEN)
 	 */
-	public Player(Game field, Colour playerColour) {
+	public Player(final Game field, final Colour playerColour) {
 		this.playerColour = playerColour;
 		this.field = field;
 		int startId = this.getStartIdByColour(playerColour);
@@ -116,7 +114,7 @@ public class Player {
 	 */
 	private void generateMoves(List<Move> possibleMoves, int roll) {
 		for (Piece piece : pieces) {
-			Location newLocation = piece.generateNewLocationGivenRoll(roll);
+			Location newLocation = piece.newRolledLocation(roll);
 			if (newLocation.getZone() == piece.position.getZone()
 					&& newLocation.getCoordinate() == piece.position.getCoordinate()) {
 				continue;

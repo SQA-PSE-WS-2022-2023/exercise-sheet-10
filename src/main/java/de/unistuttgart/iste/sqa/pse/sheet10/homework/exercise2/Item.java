@@ -4,15 +4,14 @@ package de.unistuttgart.iste.sqa.pse.sheet10.homework.exercise2;
  * Represents an individual item in the warehouse system.
  */
 public final class Item {
-	// @ private instance invariant identification != null;
 
+	// @ private instance invariant identification != null;
 	private final ItemIdentification identification;
 
 	/*@
 	@ requires identification != null;
 	@ ensures this.identification == identification;
 	@*/
-
 	/**
 	 * Creates a new item with the given identification.
 	 *
@@ -25,11 +24,17 @@ public final class Item {
 		}
 		this.identification = identification;
 	}
+	
+	// TODO methode löschen wenn nicht benötigt
+	// TODO returns a newly created copy of itself
+	public Item copy() {
+		Item returner = new Item(this.identification);
+		return returner;
+	}
 
 	/*@
 	@ ensures \result == identification;
 	@*/
-
 	/**
 	 * @return The identification object of this item.
 	 */

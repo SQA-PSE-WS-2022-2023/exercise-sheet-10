@@ -4,37 +4,33 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * This an implementation of the popular boardgame Mensch�rgereDichNicht
- *
- * @author Sven Naber
- * @version 1.0
+ * This an implementation of the popular boardgame MenschaergereDichNicht
  */
 public class Game {
-	Boolean rolled6;
-	List<Player> players = new LinkedList<Player>();
 
-	/**
-	 * Class constructor
-	 * <p>
-	 * Sets up a new Game with 4 players
-	 */
+	protected Boolean rolled6;
+	protected List<Player> players = new LinkedList<Player>();
+
 	public Game() {
-		players.add(new Player(this, Colour.RED));
-		players.add(new Player(this, Colour.BLUE));
-		players.add(new Player(this, Colour.YELLOW));
-		players.add(new Player(this, Colour.GREEN));
+
+		this.players.add(new Player(this, Colour.RED));
+		this.players.add(new Player(this, Colour.BLUE));
+		this.players.add(new Player(this, Colour.YELLOW));
+		this.players.add(new Player(this, Colour.GREEN));
 		this.rolled6 = false;
 	}
 
+	/*@
+	  @ ensures iterates over players taking turns while no winner is found
+	  @ ensures if a 6 was rolled the Player gets an extra turn
+	  @ ensures checks for win condition after each turn and terminates game if it is met
+	  @ ensures turns printed to console
+	  @*/
 	/**
 	 * Starts a Game of Mensch�rgereDichNicht
-	 *
-	 * @ensures iterates over players taking turns while no winner is found
-	 * @ensures if a 6 was rolled the Player gets an extra turn
-	 * @ensures checks for win condition after each turn and terminates game if it is met
-	 * @ensures turns printed to console
 	 */
 	public void run() {
+		
 		Player winner = null;
 		while (winner == null) {
 			for (Player player : players) {
@@ -104,9 +100,9 @@ public class Game {
 					field[piece.getPosition().coordinate] = colourHelper(piece.owner.playerColour);
 				}
 				if (piece.getPosition().getZone() == Zone.GOAL) {
-					int goalNumber = piece.getPosition().coordinate
-							+ piece.owner.getStartIdByColour(piece.owner.playerColour)
-							- 1;
+					int goalNumber = piece.getPosition().coordinate;
+					goalNumber += piece.owner.getStartIdByColour(piece.owner.playerColour);
+					goalNumber -= 1;
 					goal[goalNumber] = colourHelper(piece.owner.playerColour);
 				}
 				if (piece.getPosition().getZone() == Zone.START) {
@@ -122,6 +118,11 @@ public class Game {
 				}
 			}
 		}
+		printToMonitor(startRed, startBlue, startYellow, startGreen, field, goal);
+	}
+	
+	private void printToMonitor(int startRed, int startBlue, int startYellow, int startGreen, String[] field, String[] goal) {
+
 		System.out.println("");
 		System.out.println("Start RED " + startRed + " Pieces");
 		System.out.println("Start BLUE " + startBlue + " Pieces");
